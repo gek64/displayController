@@ -1,30 +1,14 @@
 package main
 
-import (
-	"fmt"
-	"log"
-	"syscall"
-)
+import "fmt"
 
 func main() {
-	user32, err := syscall.LoadLibrary("user32.dll")
-	if err != nil {
-		log.Fatalln(err)
+	monitors, _ := getAllDisplayMonitors()
+
+	for i, monitor := range monitors {
+		fmt.Printf("Monitor:%d\n", i)
+		fmt.Printf("Handle:%v\n", monitor.handle)
+		fmt.Printf("deviceContext:%v\n", monitor.deviceContext)
+		fmt.Printf("Rectangle:%v\n", monitor.rectAngle)
 	}
-
-	defer func(handle syscall.Handle) {
-		err := syscall.FreeLibrary(handle)
-		if err != nil {
-			log.Fatalln(err)
-		}
-	}(user32)
-
-	//https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-monitorfrompoint
-	procAddress, err := syscall.GetProcAddress(user32, "MonitorFromPoint")
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	fmt.Println(procAddress)
-
 }
