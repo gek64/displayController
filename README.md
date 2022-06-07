@@ -1,2 +1,1 @@
-# ddcci
-golang ddc/ci tool
+# monitor-tools
