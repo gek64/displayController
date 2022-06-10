@@ -20,18 +20,18 @@ func main() {
 		}
 	}(dxva2)
 
-	monitors, _ := getAllDisplayMonitors()
+	monitors, err := getAllMonitors()
+	if err != nil {
+		log.Fatalln(err)
+	}
 
 	for i, monitor := range monitors {
-		fmt.Printf("Monitor:%d\n", i)
-		fmt.Printf("Handle:%v\n", monitor.handle)
-		fmt.Printf("DeviceContext:%v\n", monitor.deviceContext)
-		fmt.Printf("Rectangle:%v\n", monitor.rectAngle)
+		fmt.Println("monitor", i, monitor)
 
-		monitorDescription, err := getPhysicalMonitorDescription(monitor.handle)
+		physicalMonitorInfo, err := getPhysicalMonitorInfo(monitor.handle)
 		if err != nil {
 			log.Fatalln(err)
 		}
-		fmt.Printf("Description:%s\n", monitorDescription)
+		fmt.Println(getVCPFeatureAndVCPFeatureReply(physicalMonitorInfo.handle, 0x10))
 	}
 }

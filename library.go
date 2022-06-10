@@ -8,9 +8,11 @@ var (
 	procEnumDisplayMonitors, _                     = syscall.GetProcAddress(user32, "EnumDisplayMonitors")
 	procGetNumberOfPhysicalMonitorsFromHMONITOR, _ = syscall.GetProcAddress(dxva2, "GetNumberOfPhysicalMonitorsFromHMONITOR")
 	procGetPhysicalMonitorsFromHMONITOR, _         = syscall.GetProcAddress(dxva2, "GetPhysicalMonitorsFromHMONITOR")
+	procGetVCPFeatureAndVCPFeatureReply, _         = syscall.GetProcAddress(dxva2, "GetVCPFeatureAndVCPFeatureReply")
+	procSetVCPFeature, _                           = syscall.GetProcAddress(dxva2, "SetVCPFeature")
 )
 
-type Rect struct {
+type RECT struct {
 	left   int32
 	top    int32
 	right  int32
@@ -20,10 +22,10 @@ type Rect struct {
 type DisplayMonitorInfo struct {
 	handle        syscall.Handle
 	deviceContext syscall.Handle
-	rectAngle     Rect
+	rectAngle     RECT
 }
 
-type PhysicalMonitor struct {
-	hPhysicalMonitor             syscall.Handle
-	szPhysicalMonitorDescription string
+type PhysicalMonitorInfo struct {
+	handle      syscall.Handle
+	description string
 }
