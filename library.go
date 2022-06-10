@@ -1,6 +1,8 @@
 package main
 
-import "syscall"
+import (
+	"syscall"
+)
 
 var (
 	user32, _                                      = syscall.LoadLibrary("User32.dll")
@@ -28,4 +30,13 @@ type DisplayMonitorInfo struct {
 type PhysicalMonitorInfo struct {
 	handle      syscall.Handle
 	description string
+}
+
+// FreeLibrary 释放库文件
+func FreeLibrary() (err error) {
+	err = syscall.FreeLibrary(user32)
+	if err != nil {
+		return err
+	}
+	return syscall.FreeLibrary(dxva2)
 }

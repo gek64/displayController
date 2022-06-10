@@ -6,8 +6,8 @@ import (
 	"unsafe"
 )
 
-// 获取所有屏幕设备信息
-func getAllMonitors() (monitors []DisplayMonitorInfo, err error) {
+// GetAllMonitors 获取所有屏幕设备信息
+func GetAllMonitors() (monitors []DisplayMonitorInfo, err error) {
 	// https://docs.microsoft.com/en-us/windows/win32/api/winuser/nc-winuser-monitorenumproc
 	var fnCallback = func(hMonitor syscall.Handle, hdc syscall.Handle, rect *RECT, lParam uintptr) int {
 		monitors = append(monitors, DisplayMonitorInfo{handle: hMonitor, deviceContext: hdc, rectAngle: *rect})
@@ -29,8 +29,8 @@ func getAllMonitors() (monitors []DisplayMonitorInfo, err error) {
 	return monitors, nil
 }
 
-// 获取显示器句柄下的显示器数量
-func getMonitorNumberFromHandle(hMonitor syscall.Handle) (number int32, err error) {
+// GetMonitorNumberFromHandle 获取显示器句柄下的显示器数量
+func GetMonitorNumberFromHandle(hMonitor syscall.Handle) (number int32, err error) {
 	_, _, callErr := syscall.SyscallN(procGetNumberOfPhysicalMonitorsFromHMONITOR,
 		uintptr(hMonitor),
 		uintptr(unsafe.Pointer(&number)),
@@ -42,8 +42,8 @@ func getMonitorNumberFromHandle(hMonitor syscall.Handle) (number int32, err erro
 	return number, nil
 }
 
-// 获取物理显示器信息
-func getPhysicalMonitorInfo(hMonitor syscall.Handle) (info PhysicalMonitorInfo, err error) {
+// GetPhysicalMonitor 获取物理显示器信息
+func GetPhysicalMonitor(hMonitor syscall.Handle) (info PhysicalMonitorInfo, err error) {
 	bytes := make([]byte, 256)
 	_, _, callErr := syscall.SyscallN(procGetPhysicalMonitorsFromHMONITOR,
 		uintptr(hMonitor),
@@ -64,20 +64,4 @@ func getPhysicalMonitorInfo(hMonitor syscall.Handle) (info PhysicalMonitorInfo, 
 	}
 
 	return PhysicalMonitorInfo{handle: syscall.Handle(bytes[0]), description: string(newBytes)}, nil
-}
-
-// 获取显示器VCP参数(需要使用 getPhysicalMonitorInfo 获取到的物理显示器 handle)
-func getVCPFeatureAndVCPFeatureReply(hPhysicalMonitor syscall.Handle, bVCPCode int32) (pvct int, pdwCurrentValue int, pdwMaximumValue int, err error) {
-	_, _, callErr := syscall.SyscallN(procGetVCPFeatureAndVCPFeatureReply,
-		uintptr(hPhysicalMonitor),
-		uintptr(bVCPCode),
-		uintptr(unsafe.Pointer(&pvct)),
-		uintptr(unsafe.Pointer(&pdwCurrentValue)),
-		uintptr(unsafe.Pointer(&pdwMaximumValue)),
-	)
-	if callErr != 0 {
-		return 0, 0, 0, fmt.Errorf(callErr.Error())
-	}
-
-	return pvct, pdwCurrentValue, pdwMaximumValue, nil
 }

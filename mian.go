@@ -1,37 +1,24 @@
 package main
 
 import (
-	"fmt"
 	"log"
-	"syscall"
 )
 
 func main() {
-	defer func(handle syscall.Handle) {
-		err := syscall.FreeLibrary(handle)
-		if err != nil {
-			log.Panicln(err)
-		}
-	}(user32)
-	defer func(handle syscall.Handle) {
-		err := syscall.FreeLibrary(handle)
-		if err != nil {
-			log.Panicln(err)
-		}
-	}(dxva2)
+	defer FreeLibrary()
 
-	monitors, err := getAllMonitors()
+	monitors, err := GetAllMonitors()
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	for i, monitor := range monitors {
-		fmt.Println("monitor", i, monitor)
+	physicalMonitorInfo, err := GetPhysicalMonitor(monitors[0].handle)
+	if err != nil {
+		log.Fatalln(err)
+	}
 
-		physicalMonitorInfo, err := getPhysicalMonitorInfo(monitor.handle)
-		if err != nil {
-			log.Fatalln(err)
-		}
-		fmt.Println(getVCPFeatureAndVCPFeatureReply(physicalMonitorInfo.handle, 0x10))
+	err = BrightnessTest(physicalMonitorInfo.handle)
+	if err != nil {
+		log.Fatalln(err)
 	}
 }
