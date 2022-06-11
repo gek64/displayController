@@ -15,25 +15,25 @@ var (
 )
 
 type RECT struct {
-	left   int32
-	top    int32
-	right  int32
-	bottom int32
+	Left   int32
+	Top    int32
+	Right  int32
+	Bottom int32
 }
 
 type DisplayMonitorInfo struct {
-	handle        syscall.Handle
-	deviceContext syscall.Handle
-	rectAngle     RECT
+	Handle        syscall.Handle
+	DeviceContext syscall.Handle
+	RectAngle     RECT
 }
 
 type PhysicalMonitorInfo struct {
-	handle      syscall.Handle
-	description string
+	Handle      syscall.Handle
+	Description string
 }
 
-// FreeLibrary 释放库文件
-func FreeLibrary() (err error) {
+// freeLibrary 释放库文件(仅模块内部使用,外部使用无效)
+func freeLibrary() (err error) {
 	err = syscall.FreeLibrary(user32)
 	if err != nil {
 		return err

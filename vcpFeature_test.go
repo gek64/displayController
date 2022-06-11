@@ -14,28 +14,28 @@ func TestBrightnessTest(t *testing.T) {
 
 	for i, monitor := range monitors {
 		// 获取物理显示器设备
-		physicalMonitor, err := GetPhysicalMonitor(monitor.handle)
+		physicalMonitor, err := GetPhysicalMonitor(monitor.Handle)
 		if err != nil {
 			t.Fatal(err)
 		}
 
 		// 获取当前显示器的亮度值及亮度最大值
-		currentValue, maximumValue, err := GetVCPFeatureAndVCPFeatureReply(physicalMonitor.handle, Brightness)
+		currentValue, maximumValue, err := GetVCPFeatureAndVCPFeatureReply(physicalMonitor.Handle, Brightness)
 		if err != nil {
 			t.Fatal(err)
 		}
 
-		fmt.Printf("显示器 %d,驱动名称 %s,当前亮度为 %d,最大亮度为 %d\n", i, physicalMonitor.description, currentValue, maximumValue)
+		fmt.Printf("显示器 %d,驱动名称 %s,当前亮度为 %d,最大亮度为 %d\n", i, physicalMonitor.Description, currentValue, maximumValue)
 		fmt.Println("将进行亮度测试,显示器亮度会从 0% 变化到 100%,之后又从 100% 变化到 0% ,测试完成后会恢复原有亮度")
 
 		// 将当前显示器亮度设置为原有值
-		err = SetVCPFeature(physicalMonitor.handle, Brightness, currentValue)
+		err = SetVCPFeature(physicalMonitor.Handle, Brightness, currentValue)
 		if err != nil {
 			t.Fatal(err)
 		}
 
 		// 对当前显示器进行亮度测试
-		err = BrightnessTest(physicalMonitor.handle)
+		err = BrightnessTest(physicalMonitor.Handle)
 		if err != nil {
 			t.Fatal(err)
 		}

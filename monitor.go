@@ -10,7 +10,7 @@ import (
 func GetAllMonitors() (monitors []DisplayMonitorInfo, err error) {
 	// https://docs.microsoft.com/en-us/windows/win32/api/winuser/nc-winuser-monitorenumproc
 	var fnCallback = func(hMonitor syscall.Handle, hdc syscall.Handle, rect *RECT, lParam uintptr) int {
-		monitors = append(monitors, DisplayMonitorInfo{handle: hMonitor, deviceContext: hdc, rectAngle: *rect})
+		monitors = append(monitors, DisplayMonitorInfo{Handle: hMonitor, DeviceContext: hdc, RectAngle: *rect})
 		// 继续枚举下一个显示器,1代表true
 		return 1
 	}
@@ -63,5 +63,5 @@ func GetPhysicalMonitor(hMonitor syscall.Handle) (info PhysicalMonitorInfo, err 
 		}
 	}
 
-	return PhysicalMonitorInfo{handle: syscall.Handle(bytes[0]), description: string(newBytes)}, nil
+	return PhysicalMonitorInfo{Handle: syscall.Handle(bytes[0]), Description: string(newBytes)}, nil
 }

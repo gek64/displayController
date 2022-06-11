@@ -27,7 +27,7 @@ var (
 	PowerMode             byte = 0xd6
 )
 
-// GetVCPFeatureAndVCPFeatureReply 获取显示器VCP参数(需要使用 GetPhysicalMonitorInfo 获取到的物理显示器 handle)
+// GetVCPFeatureAndVCPFeatureReply 获取显示器VCP参数(需要使用 GetPhysicalMonitorInfo 获取到的物理显示器 Handle)
 func GetVCPFeatureAndVCPFeatureReply(hPhysicalMonitor syscall.Handle, bVCPCode byte) (currentValue int, maximumValue int, err error) {
 	var pvct = 0
 	var pdwCurrentValue = 0
