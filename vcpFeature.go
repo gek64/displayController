@@ -75,7 +75,9 @@ func BrightnessTest(hPhysicalMonitor syscall.Handle) (err error) {
 	}(hPhysicalMonitor, Brightness, currentBrightness)
 
 	for i := 0; i <= 100; i++ {
-		fmt.Printf("set display brightness to %d%%\n", i)
+		// https://stackoverflow.com/questions/15442292/how-to-have-an-in-place-string-that-updates-on-stdout
+		// 使用 \r 覆盖前一行
+		fmt.Printf("set display brightness to %d%% \r", i)
 		err = SetVCPFeature(hPhysicalMonitor, Brightness, i)
 		if err != nil {
 			return err
@@ -83,7 +85,7 @@ func BrightnessTest(hPhysicalMonitor syscall.Handle) (err error) {
 	}
 
 	for i := 100; i >= 0; i-- {
-		fmt.Printf("set display brightness to %d%%\n", i)
+		fmt.Printf("set display brightness to %d%% \r", i)
 		err = SetVCPFeature(hPhysicalMonitor, Brightness, i)
 		if err != nil {
 			return err

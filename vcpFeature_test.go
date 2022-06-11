@@ -25,8 +25,8 @@ func TestBrightnessTest(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		fmt.Printf("显示器 %d,驱动名称 %s,当前亮度为 %d,最大亮度为 %d\n", i, physicalMonitor.Description, currentValue, maximumValue)
-		fmt.Println("将进行亮度测试,显示器亮度会从 0% 变化到 100%,之后又从 100% 变化到 0% ,测试完成后会恢复原有亮度")
+		fmt.Printf("Display Monitor: %d,Driver Name: %s,Current Brightness: %d,Maximum Brightness: %d\n", i, physicalMonitor.Description, currentValue, maximumValue)
+		fmt.Println("The brightness test will be performed, the brightness of the display will change from 0% to 100%, then from 100% to 0%\nAfter the test is completed, the original brightness will be restored")
 
 		// 将当前显示器亮度设置为原有值
 		err = SetVCPFeature(physicalMonitor.Handle, Brightness, currentValue)
@@ -40,6 +40,6 @@ func TestBrightnessTest(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		fmt.Println("亮度测试完成")
+		fmt.Println("Brightness test is completed")
 	}
 }
