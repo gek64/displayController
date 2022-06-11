@@ -1,4 +1,4 @@
-package main
+package monitor_win
 
 import (
 	"fmt"
@@ -33,7 +33,7 @@ func GetAllMonitors() (monitors []DisplayMonitorInfo, err error) {
 func GetMonitorNumberFromHandle(hMonitor syscall.Handle) (number int32, err error) {
 	_, _, callErr := syscall.SyscallN(procGetNumberOfPhysicalMonitorsFromHMONITOR,
 		uintptr(hMonitor),
-		uintptr(unsafe.Pointer(&number)),
+		uintptr(number),
 	)
 	if callErr != 0 {
 		return 0, fmt.Errorf(callErr.Error())
