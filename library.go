@@ -1,4 +1,4 @@
-package monitor_win
+package displayController
 
 import (
 	"syscall"
