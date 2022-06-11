@@ -3,5 +3,5 @@
 
 ## how to install
 ```shell
-go get github.com/gek64/monitor_win
+go get github.com/gek64/displayController
 ```
