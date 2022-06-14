@@ -6,7 +6,7 @@
 ██████╔╝██║███████║██║     ███████╗██║  ██║   ██║   ╚██████╗╚██████╔╝██║ ╚████║   ██║   ██║  ██║╚██████╔╝███████╗███████╗███████╗██║  ██║
 ╚═════╝ ╚═╝╚══════╝╚═╝     ╚══════╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝
 ```
-[中文说明](https://github.com/gek64/displayController/README_chs.md)
+[中文说明](https://github.com/gek64/displayController/blob/main/README_chs.md)
 - Call the low-level library of the system to access the display monitor `DDC/CI` channel and interface
 - Get the display driver information, such as display driver name, current display location
 - Get the value of the current parameter and the range of the current parameters, such as brightness, sharpness, contrast, red, green, blue, and other custom query parameters
@@ -51,6 +51,9 @@ func main() {
 ```
 
 ## FAQ
+### What operating system does this module support?
+- It only supports Windows now, and support systems such as macOS, Linux kernel system and freeBSD will be considered in the future.
+
 ### can get the display driver parameter normally, but the display monitor parameter cannot be obtained and controlled.
 - This program uses the `VESA` `DDC/CI` Display communication standard protocol which release in 1998 to exchange data with physical display monitors. Most of the modern display supports and enables this feature by default, If you encounter this problem, please confirm whether the `DDC/CI` function has been opened in OSD menu, or contact your display manufacturer to get more relevant information
 
