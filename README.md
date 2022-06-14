@@ -6,6 +6,8 @@
 ██████╔╝██║███████║██║     ███████╗██║  ██║   ██║   ╚██████╗╚██████╔╝██║ ╚████║   ██║   ██║  ██║╚██████╔╝███████╗███████╗███████╗██║  ██║
 ╚═════╝ ╚═╝╚══════╝╚═╝     ╚══════╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝
 ```
+[![Go Reference](https://pkg.go.dev/badge/github.com/gek64/displayController.svg)](https://pkg.go.dev/github.com/gek64/displayController)
+
 [中文说明](https://github.com/gek64/displayController/blob/main/README_chs.md)
 - Call the low-level library of the system to access the display monitor `DDC/CI` channel and interface
 - Get the display driver information, such as display driver name, current display location
