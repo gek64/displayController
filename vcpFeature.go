@@ -9,7 +9,7 @@ import (
 
 // https://www.hattelandtechnology.com/hubfs/pdf/misc/doc101681-1_8_and_13inch_dis_ddc_control.pdf
 // https://www.ddcutil.com/vcpinfo_output/
-var (
+const (
 	Brightness            byte = 0x10
 	Contrast              byte = 0x12
 	Red                   byte = 0x16
