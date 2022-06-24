@@ -6,11 +6,40 @@ import (
 	"unsafe"
 )
 
-// GetAllMonitors 获取所有屏幕设备信息
-func GetAllMonitors() (monitors []DisplayMonitorInfo, err error) {
+type CompositeMonitorInfo struct {
+	PhysicalInfo PhysicalMonitorInfo
+	SysInfo      SystemMonitorInfo
+}
+
+// GetCompositeMonitors 获取复合显示器信息
+func GetCompositeMonitors() (monitors []CompositeMonitorInfo, err error) {
+	// 获取系统显示器信息
+	systemMonitors, err := GetSystemMonitors()
+	if err != nil {
+		return nil, err
+	}
+
+	for _, sysMonitor := range systemMonitors {
+		// 获取物理显示器信息
+		physicalMonitor, err := GetPhysicalMonitor(sysMonitor.Handle)
+		if err != nil {
+			continue
+		}
+		// 拼接复合显示器信息
+		monitors = append(monitors, CompositeMonitorInfo{
+			PhysicalInfo: physicalMonitor,
+			SysInfo:      sysMonitor,
+		})
+	}
+
+	return monitors, nil
+}
+
+// GetSystemMonitors 获取所有屏幕设备信息
+func GetSystemMonitors() (info []SystemMonitorInfo, err error) {
 	// https://docs.microsoft.com/en-us/windows/win32/api/winuser/nc-winuser-monitorenumproc
 	var fnCallback = func(hMonitor syscall.Handle, hdc syscall.Handle, rect *RECT, lParam uintptr) int {
-		monitors = append(monitors, DisplayMonitorInfo{Handle: hMonitor, DeviceContext: hdc, RectAngle: *rect})
+		info = append(info, SystemMonitorInfo{Handle: hMonitor, DeviceContext: hdc, RectAngle: *rect})
 		// 继续枚举下一个显示器,1代表true
 		return 1
 	}
@@ -23,10 +52,10 @@ func GetAllMonitors() (monitors []DisplayMonitorInfo, err error) {
 		uintptr(unsafe.Pointer(nil)),
 	)
 	if callErr != 0 {
-		return monitors, fmt.Errorf(callErr.Error())
+		return info, fmt.Errorf(callErr.Error())
 	}
 
-	return monitors, nil
+	return info, nil
 }
 
 // GetMonitorNumberFromHandle 获取显示器句柄下的显示器数量

@@ -21,7 +21,7 @@ type RECT struct {
 	Bottom int32
 }
 
-type DisplayMonitorInfo struct {
+type SystemMonitorInfo struct {
 	Handle        syscall.Handle
 	DeviceContext syscall.Handle
 	RectAngle     RECT

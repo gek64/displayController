@@ -7,7 +7,7 @@ import (
 
 func TestBrightnessTest(t *testing.T) {
 	// 获取所有显示设备(包括虚拟设备)
-	monitors, err := GetAllMonitors()
+	monitors, err := GetSystemMonitors()
 	if err != nil {
 		t.Fatal(err)
 	}
