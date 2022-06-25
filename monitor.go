@@ -11,6 +11,24 @@ type CompositeMonitorInfo struct {
 	SysInfo      SystemMonitorInfo
 }
 
+type SystemMonitorInfo struct {
+	Handle        syscall.Handle
+	DeviceContext syscall.Handle
+	RectAngle     RECT
+}
+
+type PhysicalMonitorInfo struct {
+	Handle      syscall.Handle
+	Description string
+}
+
+type RECT struct {
+	Left   int32
+	Top    int32
+	Right  int32
+	Bottom int32
+}
+
 // GetCompositeMonitors 获取复合显示器信息
 func GetCompositeMonitors() (monitors []CompositeMonitorInfo, err error) {
 	// 获取系统显示器信息

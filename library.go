@@ -14,29 +14,24 @@ var (
 	procSetVCPFeature, _                           = syscall.GetProcAddress(dxva2, "SetVCPFeature")
 )
 
-type RECT struct {
-	Left   int32
-	Top    int32
-	Right  int32
-	Bottom int32
-}
-
-type SystemMonitorInfo struct {
-	Handle        syscall.Handle
-	DeviceContext syscall.Handle
-	RectAngle     RECT
-}
-
-type PhysicalMonitorInfo struct {
-	Handle      syscall.Handle
-	Description string
-}
-
-// freeLibrary 释放库文件(仅模块内部使用,外部使用无效)
-func freeLibrary() (err error) {
-	err = syscall.FreeLibrary(user32)
+// loadLibraryFunc
+func loadLibraryFunc(library string, fun string) (lib syscall.Handle, proc uintptr, err error) {
+	// load library
+	lib, err = syscall.LoadLibrary(library)
 	if err != nil {
-		return err
+		return 0, 0, err
 	}
-	return syscall.FreeLibrary(dxva2)
+
+	// load func
+	procFunc, err := syscall.GetProcAddress(lib, fun)
+	if err != nil {
+		return 0, 0, err
+	}
+
+	return lib, procFunc, err
+}
+
+// freeLibrary
+func freeLibrary(library syscall.Handle) (err error) {
+	return syscall.FreeLibrary(library)
 }
