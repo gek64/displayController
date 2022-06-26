@@ -33,20 +33,28 @@ import (
 
 func main() {
 	// 获取系统显示设备
-	monitors, _ := displayController.GetAllMonitors()
+	compositeMonitors, err := GetCompositeMonitors()
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// 在系统所有显示设备中逐个遍历
-	for i, monitor := range monitors {
-		// 获取物理显示器
-		physicalMonitor, _ := displayController.GetPhysicalMonitor(monitor.Handle)
+	for i, compositeMonitor := range compositeMonitors {
+		fmt.Printf("Monitor No.%d\n", i)
+		fmt.Printf("PhysicalInfo:%v\n", compositeMonitor.PhysicalInfo)
+		fmt.Printf("SysInfo:%v\n", compositeMonitor.SysInfo)
 
 		// 获取物理显示器的亮度参数的当前值及最大值
-		currentValue, maximumValue, _ := displayController.GetVCPFeatureAndVCPFeatureReply(physicalMonitor.Handle, displayController.Brightness)
+		currentValue, _, err := GetVCPFeatureAndVCPFeatureReply(compositeMonitor.PhysicalInfo.Handle, Brightness)
+		if err != nil {
+			t.Fatal(err)
+		}
 
-		// 将当前显示器的亮度设置为100
-		_ = displayController.SetVCPFeature(physicalMonitor.Handle, displayController.Brightness, 100)
-
-		fmt.Printf("Display Monitor: %d,Driver Name: %s,Current Brightness: %d,Maximum Brightness: %d\n", i, physicalMonitor.Description, currentValue, maximumValue)
+		// 将当前显示器的亮度设置为当前值
+		err = SetVCPFeature(compositeMonitor.PhysicalInfo.Handle, Brightness, currentValue)
+		if err != nil {
+			t.Fatal(err)
+		}
 	}
 }
 ```

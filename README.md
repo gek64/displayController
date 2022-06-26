@@ -34,20 +34,28 @@ import (
 
 func main() {
 	// Get the system display devices
-	monitors, _ := displayController.GetAllMonitors()
+	compositeMonitors, err := GetCompositeMonitors()
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// Travel in all display devices one by one
-	for i, monitor := range monitors {
-		// Get physical display
-		physicalMonitor, _ := displayController.GetPhysicalMonitor(monitor.Handle)
+	for i, compositeMonitor := range compositeMonitors {
+		fmt.Printf("Monitor No.%d\n", i)
+		fmt.Printf("PhysicalInfo:%v\n", compositeMonitor.PhysicalInfo)
+		fmt.Printf("SysInfo:%v\n", compositeMonitor.SysInfo)
 
 		// Get the current and maximum value of the brightness parameters of the physical display
-		currentValue, maximumValue, _ := displayController.GetVCPFeatureAndVCPFeatureReply(physicalMonitor.Handle, displayController.Brightness)
+		currentValue, _, err := GetVCPFeatureAndVCPFeatureReply(compositeMonitor.PhysicalInfo.Handvaluele, Brightness)
+		if err != nil {
+			t.Fatal(err)
+		}
 
-		// Set the brightness of the current display to 100
-		_ = displayController.SetVCPFeature(physicalMonitor.Handle, displayController.Brightness, 100)
-
-		fmt.Printf("Display Monitor: %d,Driver Name: %s,Current Brightness: %d,Maximum Brightness: %d\n", i, physicalMonitor.Description, currentValue, maximumValue)
+		// Set the brightness of the current display to current value
+		err = SetVCPFeature(compositeMonitor.PhysicalInfo.Handle, Brightness, currentValue)
+		if err != nil {
+			t.Fatal(err)
+		}
 	}
 }
 ```
