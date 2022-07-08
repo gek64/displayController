@@ -1,12 +1,11 @@
 package main
 
-import (
-	"fmt"
-	"syscall"
-)
+/*
+#include <IOKit/IOKitLib.h>
+
+*/
+import "C"
 
 func main() {
-	pid, _, _ := syscall.Syscall(syscall.SYS___MAC_GET_PID, 0, 0, 0)
-
-	fmt.Println(pid)
+	C.SayHello(C.CString("Hello, World\n"))
 }
