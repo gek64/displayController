@@ -1,8 +1,17 @@
 #include <iostream>
+#include "string"
 
 using namespace std;
 
 int main() {
-    cout << "Hello, world!\n";
+    string red="qwer";
+    string blue="qwee"
+
+
+    enum color {
+        he=red,
+    };
+    color c = green;
+    cout << c;
     return 0;
 }
