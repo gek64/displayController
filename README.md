@@ -77,7 +77,7 @@ func main() {
 - You can use this tool to check which parameters that your monitor supported [ControlMyMonitor](https://www.nirsoft.net/utils/control_my_monitor.html)
 
 ###  My monitor can't find the option to control DDC/CI
-- I have collected some instructions for some monitors to enable DDC/CI, check [instructions](https://github.com/gek64/displayController/tree/main/doc)
+- I've collected some uncommon ways to enable this feature for some well-known monitors, check [instructions](https://github.com/gek64/displayController/tree/main/doc)
 - Please consult the manufacturer of your monitor for instructions
 
 ## License
