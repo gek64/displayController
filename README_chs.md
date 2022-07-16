@@ -75,6 +75,10 @@ func main() {
 - 如果监视器不支持某个参数，则在调用命令时将返回错误，您可以使用错误信息来确定监视器是否支持某个参数
 - 可以使用这个工具来检查你的显示支持的参数[ControlMyMonitor](https://www.nirsoft.net/utils/control_my_monitor.html)
 
+### 我的显示器找不到控制DDC/CI的选项
+- 我收集了一些显示器启用此功能的说明，查看[说明](https://github.com/gek64/displayController/tree/main/doc)
+- 请咨询显示器制造商以获取说明
+
 ## 许可证
 - **GPL-3.0 License**
 - 查看 `LICENSE` 获取详细内容

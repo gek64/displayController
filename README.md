@@ -76,6 +76,10 @@ func main() {
 - If the monitor does not support a certain parameter, the error will be returned when calling the command. You can use the error information to determine whether the monitor supports a certain parameter
 - You can use this tool to check which parameters that your monitor supported [ControlMyMonitor](https://www.nirsoft.net/utils/control_my_monitor.html)
 
+###  My monitor can't find the option to control DDC/CI
+- I have collected some instructions for some monitors to enable DDC/CI, check [instructions](https://github.com/gek64/displayController/tree/main/doc)
+- Please consult the manufacturer of your monitor for instructions
+
 ## License
 - **GPL-3.0 License**
 - See `LICENSE` for details
