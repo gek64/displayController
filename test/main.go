@@ -11,9 +11,7 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	curr, min, max, err := displayController.GetMonitorBrightness(compositeMonitors[0].PhysicalInfo.Handle)
-	if err != nil {
-		log.Fatalln(err)
+	for _, monitor := range compositeMonitors {
+		fmt.Println(displayController.RestoreRestoreMonitorFactoryDefaults(monitor.PhysicalInfo.Handle))
 	}
-	fmt.Println(curr, min, max)
 }
