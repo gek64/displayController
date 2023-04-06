@@ -22,18 +22,19 @@ go get github.com/gek64/displayController
 ## go doc
 - https://pkg.go.dev/github.com/gek64/displayController
 
-## 例子
+## 示例
 ```go
 package main
 
 import (
 	"fmt"
 	"github.com/gek64/displayController"
+	"log"
 )
 
 func main() {
 	// 获取系统显示设备
-	compositeMonitors, err := GetCompositeMonitors()
+	compositeMonitors, err := displayController.GetCompositeMonitors()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -45,15 +46,15 @@ func main() {
 		fmt.Printf("SysInfo:%v\n", compositeMonitor.SysInfo)
 
 		// 获取物理显示器的亮度参数的当前值及最大值
-		currentValue, _, err := GetVCPFeatureAndVCPFeatureReply(compositeMonitor.PhysicalInfo.Handle, Brightness)
+		currentValue, _, err := displayController.GetVCPFeatureAndVCPFeatureReply(compositeMonitor.PhysicalInfo.Handle, displayController.Brightness)
 		if err != nil {
-			t.Fatal(err)
+			log.Println(err)
 		}
 
 		// 将当前显示器的亮度设置为当前值
-		err = SetVCPFeature(compositeMonitor.PhysicalInfo.Handle, Brightness, currentValue)
+		err = displayController.SetVCPFeature(compositeMonitor.PhysicalInfo.Handle, displayController.Brightness, currentValue)
 		if err != nil {
-			t.Fatal(err)
+			log.Println(err)
 		}
 	}
 }
