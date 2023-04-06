@@ -30,11 +30,12 @@ package main
 import (
 	"fmt"
 	"github.com/gek64/displayController"
+	"log"
 )
 
 func main() {
 	// Get the system display devices
-	compositeMonitors, err := GetCompositeMonitors()
+	compositeMonitors, err := displayController.GetCompositeMonitors()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -46,15 +47,15 @@ func main() {
 		fmt.Printf("SysInfo:%v\n", compositeMonitor.SysInfo)
 
 		// Get the current and maximum value of the brightness parameters of the physical display
-		currentValue, _, err := GetVCPFeatureAndVCPFeatureReply(compositeMonitor.PhysicalInfo.Handvaluele, Brightness)
+		currentValue, _, err := displayController.GetVCPFeatureAndVCPFeatureReply(compositeMonitor.PhysicalInfo.Handle, displayController.Brightness)
 		if err != nil {
-			t.Fatal(err)
+			log.Println(err)
 		}
 
 		// Set the brightness of the current display to current value
-		err = SetVCPFeature(compositeMonitor.PhysicalInfo.Handle, Brightness, currentValue)
+		err = displayController.SetVCPFeature(compositeMonitor.PhysicalInfo.Handle, displayController.Brightness, currentValue)
 		if err != nil {
-			t.Fatal(err)
+			log.Println(err)
 		}
 	}
 }
